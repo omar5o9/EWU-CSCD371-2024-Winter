@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System;
+
 using System.IO;
+
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -9,6 +11,7 @@ namespace Logger.Tests;
 [TestClass]
 public class FileLoggerTests
 {
+
     [TestMethod]
     public void Log_WritesToLogFile()
     {
@@ -27,3 +30,4 @@ public class FileLoggerTests
         File.Delete(filePath);
     }
 }
+

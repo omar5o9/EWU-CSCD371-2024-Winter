@@ -9,6 +9,7 @@
     <CodeAnalysisTreatWarningAsErrors>True</CodeAnalysisTreatWarningAsErrors>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+
   </PropertyGroup>
   
 
