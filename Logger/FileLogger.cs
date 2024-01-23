@@ -16,7 +16,7 @@ public class FileLogger(string? fileName) : BaseLogger
     {
         if (FilePath == null)
         {
-            throw new ArgumentNullException(nameof(FileLogger), " File path can not be null");
+            throw new ArgumentNullException(nameof(logLevel), " File path can not be null");
         }
         DateTime date = DateTime.Now;
         string currentDate = date.ToString("MM-dd-yyyy HH:mm:ss tt", CultureInfo.CurrentCulture);
