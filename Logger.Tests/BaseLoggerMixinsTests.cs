@@ -21,13 +21,49 @@ public class BaseLoggerMixinsTests
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void Warning_WithNullLogger_ThrowsException()
+    {
+        // Arrange
+
+        // Act
+        BaseLoggerMixins.Warning(null, "");
+
+        // Assert
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void Information_WithNullLogger_ThrowsException()
+    {
+        // Arrange
+
+        // Act
+        BaseLoggerMixins.Information(null, "");
+
+        // Assert
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void Debug_WithNullLogger_ThrowsException()
+    {
+        // Arrange
+
+        // Act
+        BaseLoggerMixins.Debug(null, "");
+
+        // Assert
+    }
+
+    [TestMethod]
     public void Error_WithData_LogsMessage()
     {
         // Arrange
         var logger = new TestLogger();
 
         // Act
-        logger.Error("Message 42");
+        logger.Error("Message {0}", 42);
 
         // Assert
         Assert.AreEqual(1, logger.LoggedMessages.Count);
@@ -42,7 +78,9 @@ public class BaseLoggerMixinsTests
         var logger = new TestLogger();
 
         // Act
-        logger.Warning("Message 42");
+
+        logger.Warning("Message {0}", 42);
+
 
         // Assert
         Assert.AreEqual(1, logger.LoggedMessages.Count);
@@ -57,7 +95,9 @@ public class BaseLoggerMixinsTests
         var logger = new TestLogger();
 
         // Act
-        logger.Information("Message 42");
+
+        logger.Information("Message {0}", 42);
+
 
         // Assert
         Assert.AreEqual(1, logger.LoggedMessages.Count);
@@ -72,7 +112,9 @@ public class BaseLoggerMixinsTests
         var logger = new TestLogger();
 
         // Act
-        logger.Debug("Message 42");
+
+        logger.Debug("Message {0}", 42);
+
 
         // Assert
         Assert.AreEqual(1, logger.LoggedMessages.Count);
