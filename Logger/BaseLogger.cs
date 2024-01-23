@@ -1,4 +1,5 @@
-﻿namespace Logger;
+﻿#nullable enable
+namespace Logger;
 
 public abstract class BaseLogger
 {
@@ -8,5 +9,8 @@ public abstract class BaseLogger
     {
         get; set;
     }
+
+
+
 }
 
