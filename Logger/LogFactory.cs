@@ -1,4 +1,6 @@
 #nullable enable
+using System;
+
 namespace Logger;
 
 
@@ -12,7 +14,7 @@ public class LogFactory
     {
         if (_logPath == null)
         {
-            return null;
+            throw new ArgumentNullException(nameof(FileLogger), " File path can not be null"); ;
         }
         else
         {
