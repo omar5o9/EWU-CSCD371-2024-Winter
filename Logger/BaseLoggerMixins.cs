@@ -11,6 +11,20 @@ public static class BaseLoggerMixins
         LogDo(logger, LogLevel.Error, message, yo);
     }
 
+    public static void Warning(this BaseLogger? logger, string message, params string[] yo)
+    {
+        LogDo(logger, LogLevel.Warning, message, yo);
+    }
+
+    public static void Information(this BaseLogger? logger, string message, params string[] yo)
+    {
+        LogDo(logger, LogLevel.Information, message, yo);
+    }
+
+    public static void Debug(this BaseLogger? logger, string message, params string[] yo)
+    {
+        LogDo(logger, LogLevel.Debug, message, yo);
+    }
     public static void LogDo(BaseLogger? logger, LogLevel level, string message, params string[] yo)
     {
         if (logger == null)
