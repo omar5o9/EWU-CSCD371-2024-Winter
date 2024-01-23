@@ -1,17 +1,30 @@
+
 ﻿#nullable enable
 namespace Logger;
 
+
 public class LogFactory
 {
-    public string yo;
-    public LogFactory(string className)
+    public string? logPath;
+    
+
+    public BaseLogger? CreateLogger(string className)
     {
-       this.yo = className;
+        if (logPath == null)
+        {
+            return null;
+        }
+        else
+        {
+            BaseLogger logg = new FileLogger(logPath)
+            {
+                ClassName = className
+                
+            };
+            return logg;
+        }
     }
 
-    public BaseLogger CreateLogger(string className)
-    {
 
-        return null;
-    }
+    
 }

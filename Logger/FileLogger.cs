@@ -9,9 +9,10 @@ public class FileLogger : BaseLogger
     public string FilePath;
     
 
-    public FileLogger(string className, string filePath)
+
+    public FileLogger(string filePath)
+
     {
-        ClassName = className;
         FilePath = filePath;
     }
 
