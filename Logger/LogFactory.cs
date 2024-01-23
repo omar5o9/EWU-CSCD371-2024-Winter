@@ -14,7 +14,7 @@ public class LogFactory
     {
         if (_logPath == null)
         {
-            throw new ArgumentNullException(nameof(BaseLogger), " File path can not be null"); ;
+            throw new ArgumentNullException(nameof(className), " File path can not be null"); ;
         }
         else
         {
