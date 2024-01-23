@@ -1,4 +1,6 @@
-﻿namespace Logger;
+﻿#nullable enable
+namespace Logger;
+
 
 public enum LogLevel
 {

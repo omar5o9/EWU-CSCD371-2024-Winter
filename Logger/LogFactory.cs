@@ -1,5 +1,7 @@
-﻿namespace Logger;
-#nullable enable
+
+﻿#nullable enable
+namespace Logger;
+
 
 public class LogFactory
 {
