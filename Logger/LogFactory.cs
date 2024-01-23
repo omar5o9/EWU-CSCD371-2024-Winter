@@ -6,7 +6,19 @@ namespace Logger;
 
 public class LogFactory
 {
-    private readonly string? _logPath;
+    private string? _logPath;
+    public string configure(string logPath)
+    {
+        if (_logPath == null)
+        {
+            throw new ArgumentNullException(nameof(logPath), " File path can not be null"); ;
+        }
+        else
+        {
+            _logPath = logPath;
+            return _logPath;
+        }
+    }
 
   
 
