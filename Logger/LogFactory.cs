@@ -4,18 +4,18 @@ namespace Logger;
 
 public class LogFactory
 {
-    private string? logPath;
+    private readonly string? _logPath;
     
 
     public BaseLogger? CreateLogger(string className)
     {
-        if (logPath == null)
+        if (_logPath == null)
         {
             return null;
         }
         else
         {
-            BaseLogger logg = new FileLogger(logPath)
+            BaseLogger logg = new FileLogger(_logPath)
             {
                 ClassName = className
                 
