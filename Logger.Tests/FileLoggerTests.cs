@@ -17,7 +17,7 @@ public class FileLoggerTests
     {
         // Arrange
         string filePath = "test.log";
-        FileLogger fileLogger = new FileLogger(filePath);
+        FileLogger fileLogger = new(filePath);
 
         // Act
         fileLogger.Log(LogLevel.Information, "Test message");

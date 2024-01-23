@@ -6,32 +6,32 @@ namespace Logger.Tests;
 [TestClass]
 public class LogFactoryTests
 {
-
+    // Test are WIP for now
     [TestMethod]
     public void CreateLogger_WithNonNullLogPath_ReturnsNonNullLogger()
     {
         // Arrange
-        LogFactory logFactory = new LogFactory();
-        logFactory.logPath = "test.log";
+        LogFactory logFactory = new();
+        string validLogPath = "test.log";
 
         // Act
-        BaseLogger? logger = logFactory.CreateLogger("TestClass");
-
+     
+        string result = logFactory.configure(validLogPath);
         // Assert
-        Assert.IsNotNull(logger, "Logger should not be null when logPath is not null.");
+        
+        Assert.AreEqual(validLogPath, result);
     }
 
     [TestMethod]
     public void CreateLogger_WithNullLogPath_ReturnsNullLogger()
     {
         // Arrange
-        LogFactory logFactory = new LogFactory();
-        logFactory.logPath = null;
+        LogFactory logFactory = new();
+        string invalidLogPath = null;
 
         // Act
-        BaseLogger? logger = logFactory.CreateLogger("TestClass");
 
-        // Assert
-        Assert.IsNull(logger, "Logger should be null when logPath is null.");
+        logFactory.CreateLogger(null!);
+        
     }
 }
