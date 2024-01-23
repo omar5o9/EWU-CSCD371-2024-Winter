@@ -16,11 +16,10 @@ public class LogFactory
         }
         else
         {
-            BaseLogger logg = new FileLogger(_logPath)
+            FileLogger logg = new (_logPath!)
             {
                 ClassName = className,
                
-                
             };
             return logg;
         }
