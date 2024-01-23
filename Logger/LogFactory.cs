@@ -5,7 +5,8 @@ namespace Logger;
 public class LogFactory
 {
     private readonly string? _logPath;
-    
+
+  
 
     public BaseLogger? CreateLogger(string className)
     {
@@ -17,7 +18,8 @@ public class LogFactory
         {
             BaseLogger logg = new FileLogger(_logPath)
             {
-                ClassName = className
+                ClassName = className,
+               
                 
             };
             return logg;

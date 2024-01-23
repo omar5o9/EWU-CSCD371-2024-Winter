@@ -5,23 +5,18 @@ using System.IO;
 
 namespace Logger;
 
-public class FileLogger : BaseLogger
+public class FileLogger(string? fileName) : BaseLogger
 {
-    private readonly string? FilePath;
+    private readonly string? FilePath = fileName;
     
 
-
-    public FileLogger(string filePath)
-
-    {
-        this.FilePath = filePath;
-    }
+   
 
     public override void Log(LogLevel logLevel, string message)
     {
         if (FilePath == null)
         {
-            throw new ArgumentNullException("File path can not be null");
+            throw new ArgumentNullException(nameof(FileLogger), " File path can not be null");
         }
         DateTime date = DateTime.Now;
         string currentDate = date.ToString("MM-dd-yyyy HH:mm:ss tt", CultureInfo.CurrentCulture);
