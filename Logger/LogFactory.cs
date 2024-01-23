@@ -4,7 +4,7 @@ namespace Logger;
 
 public class LogFactory
 {
-    public string? logPath;
+    private string? logPath;
     
 
     public BaseLogger? CreateLogger(string className)
