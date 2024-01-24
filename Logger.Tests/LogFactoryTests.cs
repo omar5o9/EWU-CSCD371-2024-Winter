@@ -12,7 +12,7 @@ public class LogFactoryTests
     public void Configure_ValidPath_SetsLogPath()
     {
         // Arrange
-        LogFactory logFactory = new LogFactory();
+        LogFactory logFactory = new();
         string validPath = "LogFile.txt";
 
         // Act
@@ -26,11 +26,13 @@ public class LogFactoryTests
     [ExpectedException(typeof(ArgumentNullException))]
     public void CreateLogger_WithNullLogPath_ReturnsNullLogger()
     {
-        LogFactory logFactory = new LogFactory();
-        string invalidPath = null;
+        
+        // Arrange
+        LogFactory logFactory = new();
 
         // Act
-        logFactory.configure(invalidPath);
+        logFactory.configure(null);  
+        
 
     }
   
