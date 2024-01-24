@@ -31,8 +31,8 @@ public class LogFactoryTests
         LogFactory logFactory = new();
 
         // Act
-        logFactory.configure(null);  
-        
+        logFactory.configure(null!);
+
 
     }
   
