@@ -9,7 +9,7 @@ public class LogFactory
     private string? _logPath;
     public string configure(string logPath)
     {
-        if (_logPath == null)
+        if (logPath == null)
         {
             throw new ArgumentNullException(nameof(logPath), " File path can not be null"); ;
         }

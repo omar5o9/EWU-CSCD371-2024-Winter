@@ -1,4 +1,6 @@
 ﻿#nullable enable
+using System;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Logger.Tests;
@@ -6,32 +8,30 @@ namespace Logger.Tests;
 [TestClass]
 public class LogFactoryTests
 {
-    // Test are WIP for now
     [TestMethod]
-    public void CreateLogger_WithNonNullLogPath_ReturnsNonNullLogger()
+    public void Configure_ValidPath_SetsLogPath()
     {
         // Arrange
-        LogFactory logFactory = new();
-        string validLogPath = "test.log";
+        LogFactory logFactory = new LogFactory();
+        string validPath = "LogFile.txt";
 
         // Act
-     
-        string result = logFactory.configure(validLogPath);
+        string result = logFactory.configure(validPath);
+
         // Assert
-        
-        Assert.AreEqual(validLogPath, result);
+        Assert.AreEqual(validPath, result);
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
     public void CreateLogger_WithNullLogPath_ReturnsNullLogger()
     {
-        // Arrange
-        LogFactory logFactory = new();
-        string invalidLogPath = null;
+        LogFactory logFactory = new LogFactory();
+        string invalidPath = null;
 
         // Act
+        logFactory.configure(invalidPath);
 
-        logFactory.CreateLogger(null!);
-        
     }
+  
 }
