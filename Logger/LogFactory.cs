@@ -1,4 +1,4 @@
-#nullable enable
+
 using System;
 
 namespace Logger;
@@ -7,7 +7,7 @@ namespace Logger;
 public class LogFactory
 {
     private string? _logPath;
-    public string configure(string logPath)
+    public string ConfigureFileLogger(string logPath)
     {
         if (logPath == null)
         {
@@ -15,7 +15,7 @@ public class LogFactory
         }
         else
         {
-            _logPath = logPath;
+            this._logPath = logPath;
             return _logPath;
         }
     }
@@ -30,7 +30,8 @@ public class LogFactory
         }
         else
         {
-            FileLogger logg = new (_logPath!)
+            
+            FileLogger logg = new (ConfigureFileLogger(_logPath!))
             {
                 ClassName = className,
                

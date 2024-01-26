@@ -16,14 +16,14 @@ public class LogFactoryTests
         string validPath = "LogFile.txt";
 
         // Act
-        string result = logFactory.configure(validPath);
+        string result = logFactory.ConfigureFileLogger(validPath);
 
         // Assert
         Assert.AreEqual(validPath, result);
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
+    
     public void CreateLogger_WithNullLogPath_ReturnsNullLogger()
     {
         
@@ -31,7 +31,8 @@ public class LogFactoryTests
         LogFactory logFactory = new();
 
         // Act
-        logFactory.configure(null!);
+        Assert.ThrowsException<ArgumentNullException>(() => logFactory.ConfigureFileLogger(null!));
+         
 
 
     }
