@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CanHazFunny
-{
+namespace CanHazFunny;
+
     public class Jester
     {
         public JokeServiceInterface? JokeService { get; set; }
@@ -36,5 +36,5 @@ namespace CanHazFunny
         }
     }
 
-}
+
 
