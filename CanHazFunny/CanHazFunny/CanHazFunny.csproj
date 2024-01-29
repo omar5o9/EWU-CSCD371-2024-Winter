@@ -2,7 +2,14 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
+	 <LangVersion>12.0</LangVersion>
+	 <Nullable>enable</Nullable>
+	 <EnableNETAnalyzers>True</EnableNETAnalyzers>
+	 <Nullability>True</Nullability>
+	 <CodeAnalysisTreatWarningAsErrors>True</CodeAnalysisTreatWarningAsErrors>
+	 <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+	 <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
 
 </Project>
