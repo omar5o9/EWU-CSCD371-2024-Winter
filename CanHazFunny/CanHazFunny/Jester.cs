@@ -8,10 +8,10 @@ namespace CanHazFunny;
 
     public class Jester
     {
-        public JokeServiceInterface? JokeService { get; set; }
-        public PrintJokeInterface? Printer { get; set; }
+        public IJokeServiceInterface? JokeService { get; set; }
+        public IPrintJokeInterface? Printer { get; set; }
 
-        public Jester(JokeServiceInterface? jokeService, PrintJokeInterface? printer)
+        public Jester(IJokeServiceInterface? jokeService, IPrintJokeInterface? printer)
         {
             this.JokeService = jokeService;
             this.Printer = printer;

@@ -9,8 +9,8 @@ public class JesterTests
     public void TellJoke_WithValidServices_PrintsJoke()
     {
         
-        var mockJokeService = new Mock<JokeServiceInterface>();
-        var mockPrinter = new Mock<PrintJokeInterface>();
+        var mockJokeService = new Mock<IJokeServiceInterface>();
+        var mockPrinter = new Mock<IPrintJokeInterface>();
 
         mockJokeService.Setup(j => j.GetJoke()).Returns("A funny joke");
 
@@ -27,8 +27,8 @@ public class JesterTests
     public void TellJoke_WithChuckNorrisJoke_GetsAnotherJoke()
     {
         
-        var mockJokeService = new Mock<JokeServiceInterface>();
-        var mockPrinter = new Mock<PrintJokeInterface>();
+        var mockJokeService = new Mock<IJokeServiceInterface>();
+        var mockPrinter = new Mock<IPrintJokeInterface>();
 
         mockJokeService.SetupSequence(j => j.GetJoke())
             .Returns("A Chuck Norris joke")
@@ -48,7 +48,7 @@ public class JesterTests
     public void TellJoke_WithNullJokeService_PrintsErrorMessage()
     {
         
-        var mockPrinter = new Mock<PrintJokeInterface>();
+        var mockPrinter = new Mock<IPrintJokeInterface>();
 
         var jester = new Jester(null, mockPrinter.Object);
 
@@ -63,7 +63,7 @@ public class JesterTests
     public void TellJoke_WithNullPrinter_PrintsErrorMessage()
     {
         
-        var mockJokeService = new Mock<JokeServiceInterface>();
+        var mockJokeService = new Mock<IJokeServiceInterface>();
 
         var jester = new Jester(mockJokeService.Object, null);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CanHazFunny;
 
-public class OutputService : PrintJokeInterface
+public class OutputService : IPrintJokeInterface
 {
     public void PrintJokeToScreen(string joke)
     {

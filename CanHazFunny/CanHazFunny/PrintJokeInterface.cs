@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CanHazFunny;
 
-public interface PrintJokeInterface
+public interface IPrintJokeInterface
 {
     void PrintJokeToScreen(string joke);
 }
