@@ -6,9 +6,9 @@
 	  <Nullable>enable</Nullable>
 	  <EnableNETAnalyzers>True</EnableNETAnalyzers>
 	  <Nullability>True</Nullability>
-	  <CodeAnalysisTreatWarningAsErrors>True</CodeAnalysisTreatWarningAsErrors>
-	  <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	  <CodeAnalysisTreatWarningAsErrors>true</CodeAnalysisTreatWarningAsErrors>
+	  <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+	  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
