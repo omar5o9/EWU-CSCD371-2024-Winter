@@ -1,9 +1,9 @@
 ﻿namespace Logger;
 
-public abstract class BaseClass : IEntity
+public abstract record BaseClass : IEntity
 {
 
-    public abstract Guid Id { get; init; }
+    public Guid Id { get; init; }
 
     public abstract string Name { set; get; }
 

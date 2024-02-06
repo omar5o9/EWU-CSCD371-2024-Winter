@@ -1,15 +1,17 @@
 ﻿
-namespace Logger
+namespace Logger;
+
+public record Book : BaseClass
 {
-    public class Book : BaseClass
-    {
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public int YearPublished { get; set; }
+    public string Title { get; set; }
+    public string Author { get; set; }
+    public int YearPublished { get; set; }
 
-        // Calculated property for the full name of the book (Title + Author)
-        public string FullName => $"{Title} by {Author}";
+    // Calculated property for the full name of the book (Title + Author)
+    public string FullName => $"{Title} by {Author}";
 
-        // Comment: The calculated property makes sense here as the full name is a combination of Title and Author.
-    }
+    public override string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    // The calculated property makes sense here as the full name is a combination of Title and Author.
 }
+
