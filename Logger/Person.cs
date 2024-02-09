@@ -3,13 +3,11 @@ namespace Logger;
 
 public abstract record Person : BaseClass
 {
+    // FullName, FirstName, LastName, and MiddleName are implicit because they do not derive from BaseClass
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string? MiddleName { get; set; }
 
-    // Calculated property for the full name of the person
     public string FullName => $"{FirstName} {MiddleName?.Trim()} {LastName}";
-
-    // Calculated property for FullName is appropriate as it combines the FirstName and LastName.
 }
 
