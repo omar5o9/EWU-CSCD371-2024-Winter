@@ -23,9 +23,11 @@ public class Node<T>
 
         while (cur.Next != this)
         {
-            newNode.Next = cur.Next;
-            cur.Next = newNode;
+            cur = cur.Next;
         }
+
+        newNode.Next = cur.Next;
+        cur.Next = newNode;
     }
 
     public override string ToString()
