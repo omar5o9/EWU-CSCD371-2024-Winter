@@ -1,11 +1,12 @@
 ﻿<Project>
 
   <PropertyGroup>
-      <TargetFramework>net8.0</TargetFramework>
-	    <LangVersion>12.0</LangVersion>
-      <ImplicitUsings>enable</ImplicitUsings>
-      <Nullable>enable</Nullable>
-	    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+	<TargetFramework>net8.0</TargetFramework>
+	<LangVersion>12.0</LangVersion>
+      	<ImplicitUsings>enable</ImplicitUsings>
+      	<Nullable>enable</Nullable>
+	<EnableNETAnalyzers>true</EnableNETAnalyzers>
+	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
 </Project>
