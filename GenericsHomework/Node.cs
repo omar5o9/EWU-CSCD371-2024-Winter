@@ -16,7 +16,7 @@ public class Node<T>
     {
         if(Exists(value))
         {
-            throw new Exception("Value already exists in the list");
+            throw new InvalidOperationException(nameof(value));
         }   
         Node<T> newNode = new(value);
         Node<T> cur = this;
