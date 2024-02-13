@@ -1,4 +1,5 @@
 ﻿namespace GenericsHomework;
+using System;
 
 public class Node<T>
 {
