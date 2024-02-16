@@ -5,8 +5,8 @@ namespace GenericsHomework;
 public class Node<T>
 {
 
-    public Node<T> Next { get; set; }
-    public T Data { get; set; }
+    public Node<T> Next { get; private set; }
+    public T Data { get; }
 
     public Node(T data)
     {

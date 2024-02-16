@@ -5,14 +5,14 @@ public class NodeTests
 {
 
     [Fact]
-    public void DuplicateValueTest()
+    public void Assert_DuplicateValueTest_ThrowsException()
     {
         Node<int> newNode = new(1);
         Assert.Throws<InvalidOperationException>(() => newNode.Append(1));
     }
 
     [Fact]
-    public void AppendTest()
+    public void Assert_MultipleValues_Appended_Test()
     {
         Node<int> newNode = new(1);
         newNode.Append(2);
@@ -23,7 +23,7 @@ public class NodeTests
     }
 
     [Fact]
-    public void ClearTest()
+    public void Assert_Clear_Test()
     {
         Node<int> newNode = new(1);
         newNode.Append(2);
@@ -35,7 +35,7 @@ public class NodeTests
     }
 
     [Fact]
-    public void ExistsTest()
+    public void Assert_ValuesExist_AndNotExist()
     {
         Node<int> newNode = new(1);
         newNode.Append(2);
@@ -47,10 +47,19 @@ public class NodeTests
     }
 
     [Fact]
-    public void NextPointsToSelfTest()
+    public void Next_PointsToSelf_Test()
     {
         Node<int> newNode = new(1);
         Assert.Equal(newNode, newNode.Next);
+    }
+
+    [Fact]
+    public void Assert_ToString()
+    {
+        Node<int> newNode = new(1);
+        newNode.Append(2);
+        newNode.Append(3);
+        Assert.Equal("1 -> 2 -> 3", newNode.ToString());
     }
 
 }
