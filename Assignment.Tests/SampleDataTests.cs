@@ -8,24 +8,20 @@ namespace Assignment.Tests;
 
 public class SampleDataTests
 {
-    private readonly SampleData _sampleData;
+    private readonly SampleData SampleData;
 
     public SampleDataTests()
     {
-        _sampleData = new SampleData();
+        SampleData = new SampleData();
     }
 
+
     [Fact]
-    public void GetUniqueSortedListOfStatesGivenCsvRows_ReturnsUniqueSortedStates()
+    public void GetAggregateListOfStatesGivenPeopleCollection_EmptyList_ReturnsSuccessful()
     {
-        // Arrange
-        List<string> expectedStates = new() { "California", "Florida", "New York", "Texas" };
-
-        // Act
-        IEnumerable<string> actualStates = _sampleData.GetUniqueSortedListOfStatesGivenCsvRows();
-
-        // Assert
-        Assert.Equal(expectedStates, actualStates);
+        List<IPerson> people = new List<IPerson>();
+        string states = SampleData.GetAggregateListOfStatesGivenPeopleCollection(people);
+        Assert.Equal("", states);
     }
 
 }

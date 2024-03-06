@@ -32,4 +32,3 @@ public class SampleData : ISampleData
         IEnumerable<IPerson> people) 
         => string.Join(", ", people.Select(person => person.Address.State).Distinct().OrderBy(state => state).ToArray());
 }
-
