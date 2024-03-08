@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-namespace Assignment;
+﻿namespace Assignment;
 public class SampleData : ISampleData
 {
     // 1.

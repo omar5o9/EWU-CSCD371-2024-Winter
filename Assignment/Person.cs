@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-
-namespace Assignment;
+﻿namespace Assignment;
 public class Person : IPerson
 {
     public Person(string firstName, string lastName, IAddress address, string emailAddress)
