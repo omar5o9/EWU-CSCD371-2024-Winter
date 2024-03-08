@@ -10,7 +10,9 @@ public class SampleData : ISampleData
 
     // 3.
     public string GetAggregateSortedListOfStatesUsingCsvRows()
-        => string.Join(", ", GetUniqueSortedListOfStatesGivenCsvRows().ToArray());
+    {
+        return string.Join(", ", GetUniqueSortedListOfStatesGivenCsvRows().ToArray());
+    }
 
     // 4.
     public IEnumerable<IPerson> People
@@ -24,6 +26,7 @@ public class SampleData : ISampleData
 
     // 6.
     public string GetAggregateListOfStatesGivenPeopleCollection(
-        IEnumerable<IPerson> people) 
-        => string.Join(", ", people.Select(person => person.Address.State).Distinct().OrderBy(state => state).ToArray());
+        IEnumerable<IPerson> people){ 
+        return string.Join(", ", people.Select(person => person.Address.State).Distinct().OrderBy(state => state).Aggregate((current, next) => $"{current}, {next}"));
+    }
 }
