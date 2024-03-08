@@ -1,9 +1,4 @@
 ﻿using GenericsHomework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assignment.Tests;
 public class NodeTests
@@ -15,7 +10,5 @@ public class NodeTests
         node.Append(3);
         Assert.NotEqual(node.Data, node.Next.Data);
     }
-
-
 
 }

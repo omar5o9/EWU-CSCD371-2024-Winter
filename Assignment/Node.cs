@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 namespace GenericsHomework;
 
 
@@ -24,35 +21,35 @@ public class Node<T> : IEnumerable<Node<T>> where T : notnull
             throw new InvalidOperationException(nameof(value));
         }   
         Node<T> newNode = new(value);
-        Node<T> cur = this;
+        Node<T> currentNode = this;
 
-        while (cur.Next != this)
+        while (currentNode.Next != this)
         {
-            cur = cur.Next;
+            currentNode = currentNode.Next;
         }
 
-        newNode.Next = cur.Next;
-        cur.Next = newNode;
+        newNode.Next = currentNode.Next;
+        currentNode.Next = newNode;
     }
 
     public override string ToString()
     {
-        Node<T> cur = this;
+        Node<T> currentNode = this;
         string result = "";
-        while (cur.Next != this)
+        while (currentNode.Next != this)
         {
-            result += cur.Data + " -> ";
-            cur = cur.Next;
+            result += currentNode.Data + " -> ";
+            currentNode = currentNode.Next;
         }
-        result += cur.Data;
+        result += currentNode.Data;
         return result;
     }
     
     public void Clear()
     {
         // C# will automatically garbage collect the rest of the nodes
-        Node<T> cur = this;
-        cur.Next = this;
+        Node<T> currentNode = this;
+        currentNode.Next = this;
        
 
     }
@@ -60,16 +57,16 @@ public class Node<T> : IEnumerable<Node<T>> where T : notnull
     public bool Exists(T value)
     {
 
-        Node<T> cur = this;
-        while (cur.Next != this)
+        Node<T> currentNode = this;
+        while (currentNode.Next != this)
         {
-            if (cur.Data != null && cur.Data.Equals(value))
+            if (currentNode.Data != null && currentNode.Data.Equals(value))
             {
                 return true;
             }
-            cur = cur.Next;
+            currentNode = currentNode.Next;
         }
-        return cur.Data != null && cur.Data.Equals(value);
+        return currentNode.Data != null && currentNode.Data.Equals(value);
         
         
     }
@@ -98,9 +95,6 @@ public class Node<T> : IEnumerable<Node<T>> where T : notnull
         } while (current != this && count < maximum);
         
     }
-
-
-
 
 }
 
