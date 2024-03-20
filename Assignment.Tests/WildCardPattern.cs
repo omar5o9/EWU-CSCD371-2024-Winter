@@ -623,12 +623,25 @@ namespace IntelliTect.TestTools;
             parser.EndWildcardPattern();
         }
 
-        internal static Exception NewWildcardPatternException(string invalidPattern)
+        public class InvalidWildcardPatternException : Exception
         {
-            return new Exception(
-                    $"The wildcard pattern, '{invalidPattern}', is invalid.");
+            public InvalidWildcardPatternException(string invalidPattern)
+                : base($"The wildcard pattern, '{invalidPattern}', is invalid.")
+            {
+            }
+
         }
-    };
+
+    internal static Exception NewWildcardPatternException(string invalidPattern)
+        {
+            //return new Exception(
+              //      $"The wildcard pattern, '{invalidPattern}', is invalid.");
+                //return new InvalidWildcardPatternException(invalidPattern);
+            return new InvalidWildcardPatternException(invalidPattern);
+
+    
+        }
+};
 
     /// <summary>
     /// Convert a string with wild cards into its equivalent regex
