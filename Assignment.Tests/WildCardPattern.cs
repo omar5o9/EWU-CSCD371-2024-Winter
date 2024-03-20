@@ -9,8 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace IntelliTect.TestTools
-{
+namespace IntelliTect.TestTools;
+
     /// <summary>
     /// Provides enumerated values to use to set wildcard pattern
     /// matching options.
@@ -164,8 +164,8 @@ namespace IntelliTect.TestTools
         /// <returns></returns>
         public static WildcardPattern Get(string pattern, WildcardOptions options)
         {
-            if (pattern == null)
-                throw new ArgumentNullException(nameof(pattern));
+            
+            ArgumentNullException.ThrowIfNull(pattern);
 
             if (pattern.Length == 1 && pattern[0] == '*')
                 return s_matchAllIgnoreCasePattern;
@@ -223,15 +223,11 @@ namespace IntelliTect.TestTools
         {
 #pragma warning disable 56506
 
-            if (pattern == null)
-            {
-                throw new ArgumentNullException(nameof(pattern));
-            }
+           
+            ArgumentNullException.ThrowIfNull(pattern);
+            ArgumentNullException.ThrowIfNull(charsNotToEscape);
 
-            if (charsNotToEscape == null)
-            {
-                throw new ArgumentNullException(nameof(charsNotToEscape));
-            }
+            
 
             char[] temp = new char[(pattern.Length * 2) + 1];
             int tempIndex = 0;
@@ -1244,4 +1240,4 @@ namespace IntelliTect.TestTools
             return parser._result.ToString();
         }
     }
-}
+
