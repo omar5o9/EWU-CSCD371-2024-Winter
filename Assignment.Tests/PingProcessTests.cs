@@ -145,6 +145,7 @@ PING* 56 data bytes
 * packets transmitted, * received, *% packet loss, time *ms
 rtt min/avg/max/mdev = */*/*/* ms
 ".Trim();
+    /*
     private void AssertValidPingOutput(int exitCode, string? stdOutput)
     {
         Assert.IsFalse(string.IsNullOrWhiteSpace(stdOutput));
@@ -153,6 +154,6 @@ rtt min/avg/max/mdev = */*/*/* ms
             $"Output is unexpected: {stdOutput}");
         Assert.AreEqual<int>(0, exitCode);
     }
-    //private void AssertValidPingOutput(PingResult result) =>
-      //  AssertValidPingOutput(result.ExitCode, result.StdOutput);
+    private void AssertValidPingOutput(PingResult result) =>
+      AssertValidPingOutput(result.ExitCode, result.StdOutput); */
 }
