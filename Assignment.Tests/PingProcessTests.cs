@@ -153,6 +153,6 @@ rtt min/avg/max/mdev = */*/*/* ms
             $"Output is unexpected: {stdOutput}");
         Assert.AreEqual<int>(0, exitCode);
     }
-    private void AssertValidPingOutput(PingResult result) =>
-        AssertValidPingOutput(result.ExitCode, result.StdOutput);
+    //private void AssertValidPingOutput(PingResult result) =>
+      //  AssertValidPingOutput(result.ExitCode, result.StdOutput);
 }
