@@ -25,51 +25,86 @@ public class PingProcess
         return new PingResult(process.ExitCode, stringBuilder?.ToString());
     }
 
+    // 1]
     public Task<PingResult> RunTaskAsync(string hostNameOrAddress)
     {
         return Task.Run(() => Run(hostNameOrAddress));
+
     }
 
-    public async Task<PingResult> RunAsync(
-        string hostNameOrAddress, CancellationToken cancellationToken = default)
+    // 2]
+    public async Task<PingResult> RunAsync(string hostNameOrAddress)
+    {
+        return await Task.Run(() => Run(hostNameOrAddress));
+
+    }
+
+    // 3]
+    public async Task<PingResult> RunAsync(string hostNameOrAddress, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        return await Task.Run(() => Run(hostNameOrAddress), cancellationToken);
+        try
+        {
+            return await Task.Run(() => Run(hostNameOrAddress), cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            throw new AggregateException(new TaskCanceledException("Operation canceled."));
+        }
+
     }
 
+    // 4]
     public async Task<PingResult> RunAsync(IEnumerable<string> hostNameOrAddresses, CancellationToken cancellationToken = default)
     {
         StringBuilder stringBuilder = new();
         int count = 0;
-        await Task.WhenAll(hostNameOrAddresses.Select(async item =>
+        var semaphore = new SemaphoreSlim(1);
+
+        var tasks = hostNameOrAddresses.Select(async item =>
         {
             try
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 PingResult result = await RunAsync(item, cancellationToken);
-                lock (stringBuilder)
+                if (result.StdOutput != null)
                 {
-                    stringBuilder.AppendLine(result.StdOutput?.Trim());
-                    count++;
+                    await semaphore.WaitAsync(cancellationToken);
+                    count += result.ExitCode;
+                    stringBuilder.AppendLine(result.StdOutput.Trim());
+                    semaphore.Release();
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error occurred for '{item}': {ex.Message}");
+                await semaphore.WaitAsync(cancellationToken);
+                stringBuilder.AppendLine($"Error pinging {item}: {ex.Message}");
+                semaphore.Release();
             }
-        }));
+        });
+        await Task.WhenAll(tasks);
         return new PingResult(count, stringBuilder.ToString().Trim());
+
     }
 
-    public Task<PingResult> RunLongRunningAsync(
-        string hostNameOrAddress, CancellationToken cancellationToken = default)
+    // 5]
+    public Task<int> RunLongRunningAsync(
+        ProcessStartInfo startInfo,
+        Action<string?>? progressOutput,
+        Action<string?>? progressError,
+        CancellationToken cancellationToken)
     {
-        return Task.Factory.StartNew(() =>
+        return Task.Run(() =>
         {
-            cancellationToken.ThrowIfCancellationRequested();
-            return Run(hostNameOrAddress);
-        }, cancellationToken, TaskCreationOptions.LongRunning, TaskScheduler.Current);
-    }
+            var process = new Process
+            {
+                StartInfo = UpdateProcessStartInfo(startInfo)
+            };
+            RunProcessInternal(process, progressOutput, progressError, cancellationToken);
+            return process.ExitCode;
+        }, cancellationToken);
 
+    }
 
     private Process RunProcessInternal(
         ProcessStartInfo startInfo,
