@@ -331,10 +331,7 @@ namespace IntelliTect.TestTools;
         public static string Unescape(
             string pattern, char escapeCharacter)
         {
-            if (pattern == null)
-            {
-                throw new ArgumentNullException(nameof(pattern));
-            }
+            ArgumentNullException.ThrowIfNull(pattern);
 
             char[] temp = new char[pattern.Length];
             int tempIndex = 0;
