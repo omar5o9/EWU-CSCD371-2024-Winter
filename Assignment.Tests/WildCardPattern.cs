@@ -623,7 +623,7 @@ namespace IntelliTect.TestTools;
             parser.EndWildcardPattern();
         }
 
-        public class InvalidWildcardPatternException : Exception
+        public sealed class InvalidWildcardPatternException : Exception
         {
             public InvalidWildcardPatternException(string invalidPattern)
                 : base($"The wildcard pattern, '{invalidPattern}', is invalid.")
