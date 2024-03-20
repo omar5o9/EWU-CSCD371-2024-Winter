@@ -403,7 +403,7 @@ namespace IntelliTect.TestTools;
             // https://stackoverflow.com/questions/140926/normalize-newlines-in-c-sharp
             input = Regex.Replace(input, @"\r\n|\n\r|\n|\r", Environment.NewLine);
 
-            if (trimTrailingNewline && input.EndsWith(Environment.NewLine))
+            if (trimTrailingNewline && input.EndsWith(Environment.NewLine, StringComparison.Ordinal))
             {
                 input = input.Substring(0, input.Length - Environment.NewLine.Length);
             }
