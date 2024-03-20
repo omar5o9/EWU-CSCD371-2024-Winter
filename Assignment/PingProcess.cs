@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -84,8 +85,40 @@ public class PingProcess
         });
         await Task.WhenAll(tasks);
         return new PingResult(count, stringBuilder.ToString().Trim());
-
     }
+
+    /*
+    public async Task<PingResult> RunAsync(IEnumerable<string> hostNameOrAddresses, CancellationToken cancellationToken = default)
+    {
+        StringBuilder stringBuilder = new();
+        int count = 0;
+        var semaphore = new SemaphoreSlim(1);
+
+        var tasks = hostNameOrAddresses.Select(async item =>
+        {
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                PingResult result = await RunAsync(item, cancellationToken);
+                if (result.StdOutput != null)
+                {
+                    await semaphore.WaitAsync(cancellationToken);
+                    count += result.ExitCode;
+                    stringBuilder.AppendLine(result.StdOutput.Trim());
+                    semaphore.Release();
+                }
+            }
+            catch (Exception ex)
+            {
+                await semaphore.WaitAsync(cancellationToken);
+                stringBuilder.AppendLine($"Error pinging {item}: {ex.Message}");
+                semaphore.Release();
+            }
+        });
+        await Task.WhenAll(tasks);
+        return new PingResult(count, stringBuilder.ToString().Trim());
+
+    } */
 
     // 5]
     public Task<int> RunLongRunningAsync(
