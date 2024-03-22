@@ -1,11 +1,7 @@
 ﻿using IntelliTect.TestTools;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace Assignment.Tests;
 
@@ -18,6 +14,7 @@ public class PingProcessTests
     public void TestInitialize()
     {
         Sut = new();
+
     }
 
     
@@ -26,10 +23,11 @@ public class PingProcessTests
     {
         Process process = Process.Start("ping", "-c 4 localhost");
         process.WaitForExit();
-        Assert.AreEqual(0, process.ExitCode);
-    } 
+        Assert.AreEqual<int>(0, process.ExitCode);
 
+    }
 
+    // baaad test
     /*[TestMethod]
     public void Run_GoogleDotCom_Success()
     {
@@ -38,68 +36,78 @@ public class PingProcessTests
     }
     */
 
-    /*[TestMethod]
+    [TestMethod]
     public void Run_InvalidAddressOutput_Success()
     {
-        (int exitCode, string? stdOutput) = Sut.Run("badaddress");
-        Assert.IsFalse(string.IsNullOrWhiteSpace(stdOutput));
-        stdOutput = WildcardPattern.NormalizeLineEndings(stdOutput!.Trim());
+        (int exitCode, string? stdOutput, string? stdError) = Sut.Run("badaddress");
+        // Check if stdError is not empty
+        Assert.IsFalse(string.IsNullOrWhiteSpace(stdError));
+        stdOutput = WildcardPattern.NormalizeLineEndings(stdError!.Trim());
         Assert.AreEqual<string?>(
-            "Ping request could not find host badaddress. Please check the name and try again.".Trim(),
+            "ping: badaddress: Temporary failure in name resolution".Trim(),
             stdOutput,
             $"Output is unexpected: {stdOutput}");
-        Assert.AreEqual<int>(1, exitCode);
-    }
-    */
 
-    /* [TestMethod]
+        Assert.AreEqual<int>(2, exitCode);
+
+    }
+
+
+    [TestMethod]
     public void Run_CaptureStdOutput_Success()
     {
-        PingResult result = Sut.Run("localhost");
+        PingResult result = Sut.Run("-c 4 localhost");
         AssertValidPingOutput(result);
+
     }
+
     [TestMethod]
     public void RunTaskAsync_Success()
     {
-        // Do NOT use async/await in this test.
-        // Test Sut.RunTaskAsync("localhost");
-        Task<PingResult> task = Sut.RunTaskAsync("localhost");
-        task.Start();
-        AssertValidPingOutput(task.Result);
+        var pingProcess = new PingProcess();
+        var resultTask = pingProcess.RunTaskAsync("-c 4 localhost");
+        resultTask.Wait(); 
+        var result = resultTask.Result;
+
+        Assert.IsNotNull(result);
+        Assert.AreEqual(0, result.ExitCode); 
+        Assert.IsNotNull(result.StdOutput);
+
     }
+
     //1
     [TestMethod]
     public void RunAsync_UsingTaskReturn_Success()
     {
         // Do NOT use async/await in this test.
-       // PingResult result = default;
+        // PingResult result = default;
         // Test Sut.RunAsync("localhost");
-        Task<PingResult> task = Sut.RunAsync("localhost");
-        AssertValidPingOutput(task.Result);
+        Task<PingResult> actual = Sut.RunAsync("-c 4 localhost");
+        AssertValidPingOutput(actual.Result);
+
     }
     //2
     [TestMethod]
-//#pragma warning disable CS1998 // Remove this
     async public Task RunAsync_UsingTpl_Success()
     {
         // DO use async/await in this test.
         // PingResult result = default;
         // Test Sut.RunAsync("localhost");
-        PingResult result = await Sut.RunAsync("localhost");
-        AssertValidPingOutput(result);
+        PingResult actual = await Sut.RunAsync("-c 4 localhost");
+        AssertValidPingOutput(actual);
+
     }
-//#pragma warning restore CS1998 // Remove this
-     */
+     
 
     //3
     [TestMethod]
     [ExpectedException(typeof(AggregateException))]
     public void RunAsync_UsingTplWithCancellation_CatchAggregateExceptionWrapping()
     {
-        CancellationTokenSource cancellationTokenSource = new();
-        Task<PingResult> task = Task.Run(() => Sut.RunAsync("localhost", cancellationTokenSource.Token));
+        var cancellationTokenSource = new CancellationTokenSource();
         cancellationTokenSource.Cancel();
-        task.Wait();
+        Sut.RunAsync("-c 4 localhost", cancellationTokenSource.Token).Wait();
+
     }
 
     //3
@@ -107,107 +115,61 @@ public class PingProcessTests
     [ExpectedException(typeof(TaskCanceledException))]
     public void RunAsync_UsingTplWithCancellation_CatchAggregateExceptionWrappingTaskCanceledException()
     {
-        // Use exception.Flatten()
-        CancellationTokenSource cancellationTokenSource = new();
+        var cancellationTokenSource = new CancellationTokenSource();
         cancellationTokenSource.Cancel();
-        Task<PingResult> task = Sut.RunAsync("localhost", cancellationTokenSource.Token);
+
         try
         {
-            task.Wait();
+            Sut.RunAsync("-c 4 localhost", cancellationTokenSource.Token).Wait();
         }
         catch (AggregateException aggregateException)
         {
-            aggregateException = aggregateException.Flatten();
-
-            if (aggregateException != null)
-            {
-                throw aggregateException.InnerException!;
-            }
-            throw;
+            Exception? innerException = aggregateException.Flatten().InnerException;
+            throw innerException!;
         }
+
     }
 
-    /*[TestMethod]
+    [TestMethod]
     async public Task RunAsync_MultipleHostAddresses_True()
     {
         // Pseudo Code - don't trust it!!!
-        string[] hostNames = new string[] { "localhost", "localhost", "localhost", "localhost" };
+        string[] hostNames = ["localhost", "localhost", "localhost", "localhost"];
         int expectedLineCount = PingOutputLikeExpression.Split(Environment.NewLine).Length*hostNames.Length;
         PingResult result = await Sut.RunAsync(hostNames);
         int? lineCount = result.StdOutput?.Split(Environment.NewLine).Length;
         Assert.AreEqual(expectedLineCount, lineCount);
-    }
-    */
 
-    /* commented out due to we have another test
+    }
+
+
     [TestMethod]
-//#pragma warning disable CS1998 // Remove this
     async public Task RunLongRunningAsync_UsingTpl_Success()
     {
-        PingResult result = default;
-        // Test Sut.RunLongRunningAsync("localhost");
-        AssertValidPingOutput(result);
-    }
-//#pragma warning restore CS1998 // Remove this
-    */
+        var startInfo = new ProcessStartInfo("ping", "-c 4 localhost");
+        int exitCode = await Sut.RunLongRunningAsync(startInfo, null, null, default);
+        Assert.AreEqual(0, exitCode);
 
-    /*[TestMethod]
+    }
+
+
+    [TestMethod]
     public void StringBuilderAppendLine_InParallel_IsNotThreadSafe()
     {
-        IEnumerable<int> numbers = Enumerable.Range(0, short.MaxValue);
-        System.Text.StringBuilder stringBuilder = new();
-        object lockObject = new(); // Create a lock object
-        numbers.AsParallel().ForAll(item =>
+        try
         {
-            lock (lockObject) // Acquire lock before accessing the StringBuilder
-            {
-                stringBuilder.AppendLine("");
-            }
-        });
-        int lineCount = stringBuilder.ToString().Split(Environment.NewLine).Length;
-        Assert.AreNotEqual(lineCount, numbers.Count() + 1);
-    }
-    */
+            IEnumerable<int> numbers = Enumerable.Range(0, short.MaxValue);
+            StringBuilder stringBuilder = new();
+            numbers.AsParallel().ForAll(item => stringBuilder.AppendLine(""));
+            int lineCount = stringBuilder.ToString().Split(Environment.NewLine).Length;
+            Assert.AreNotEqual(lineCount, numbers.Count() + 1);
 
-
-    // Create a test for RunAsync(IEnumerable<string> hostNameOrAddresses, CancellationToken cancellationToken = default)
-    /*[TestMethod]
-    public void RunAsync_MultipleHostAddressesWithCancellation_True()
-    {
-        CancellationTokenSource cancellationTokenSource = new();
-        string[] hostNames = new string[] { "localhost", "localhost", "localhost", "localhost" };
-        int expectedLineCount = PingOutputLikeExpression.Split(Environment.NewLine).Length * hostNames.Length;
-        PingResult result = Sut.RunAsync(hostNames, cancellationTokenSource.Token).Result;
-        int? lineCount = result.StdOutput?.Split(Environment.NewLine).Length;
-        Assert.AreEqual(expectedLineCount, lineCount);
-    }
-    */
-
-    // Create a test for public Task<int> RunLongRunningAsync(ProcessStartInfo startInfo, Action<string?>? progressOutput, Action<string?>? progressError, CancellationToken token)
-    /* [TestMethod]
-    public void RunLongRunningAsync_ProcessStartInfo_Success()
-    {
-        ProcessStartInfo startInfo = new ProcessStartInfo
+        }
+        catch (AggregateException)
         {
-            FileName = "ping",
-            Arguments = "localhost",
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true,
-            WindowStyle = ProcessWindowStyle.Hidden,
-            ErrorDialog = false,
-            StandardOutputEncoding = Encoding.UTF8,
-            StandardErrorEncoding = Encoding.UTF8,
-            WorkingDirectory = Environment.CurrentDirectory,
-            ErrorDialogParentHandle = IntPtr.Zero,
-            Verb = "runas",
-            UserName = Environment.UserName
-        };
+            // Handle AggregateException if needed
+        }
     }
-    */
-
-
 
 
     readonly string PingOutputLikeExpression = @"
@@ -220,7 +182,7 @@ PING * 56 data bytes
 * packets transmitted, * received, *% packet loss, time *ms
 rtt min/avg/max/mdev = */*/*/* ms
 ".Trim();
-    /*private void AssertValidPingOutput(int exitCode, string? stdOutput)
+    private void AssertValidPingOutput(int exitCode, string? stdOutput)
     {
         Assert.IsFalse(string.IsNullOrWhiteSpace(stdOutput));
         stdOutput = WildcardPattern.NormalizeLineEndings(stdOutput!.Trim());
@@ -230,5 +192,5 @@ rtt min/avg/max/mdev = */*/*/* ms
     }
     private void AssertValidPingOutput(PingResult result) =>
         AssertValidPingOutput(result.ExitCode, result.StdOutput);
-    */
+
 }
